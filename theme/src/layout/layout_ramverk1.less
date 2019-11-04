@@ -1,0 +1,527 @@
+/**
+ * Layout style for general structure of header, navbar, main, footer
+ * and other regions of the page including route specific styles.
+ */
+
+/**-----------------------------------------/
+ * Variables
+ *-----------------------------------------*/
+
+/**-----------------------------------------/
+ * General layout
+ *-----------------------------------------*/
+
+/**-----------------------------------------/
+ * VGrid for easy layout
+ *-----------------------------------------*/
+.row {
+    #desinax-vgrid.row();
+}
+
+.inner-wrap {
+    #desinax-vgrid.grid(1100px);
+}
+/**
+ * Over-ride inner-wrapp for header
+ */
+.inner-wrap-header {
+    #desinax-vgrid.grid(100%);
+    margin-bottom: 12px;
+}
+/**
+ * Show the vertikalt grid
+ */
+.vgrid .inner-wrap {
+    @gridImage: "../img/grid_24x30x10-nomargin.png";
+    //@gridImage: "../../img/grid_12x60x20-nomargin.png";
+    #desinax-vgrid.showGrid(@gridImage, 1100px);
+
+    &.inner-wrap-header,
+    &.inner-wrap-footer {
+        #desinax-vgrid.showGrid(@gridImage);
+    }
+}
+/**-----------------------------------------/
+ * Navbars, mobile and desktop
+ *-----------------------------------------*/
+ .rm-navbar-max {
+     display: none;
+ }
+
+ .rm-small {
+     font-size: 2em;
+ }
+
+ .rm-default a {
+  font-size: 1.6em;
+  padding: 0.6em;
+ }
+/**-----------------------------------------/
+ * Header
+ *-----------------------------------------*/
+.region-header-col-1,
+.region-header-col-3 {
+    #desinax-vgrid.column(12);
+}
+
+.region-header-col-2 {
+    #desinax-vgrid.column(@columns);
+    text-align: center;
+}
+
+.site-logo {
+    display: none;
+}
+
+.site-logo-text {
+    font-size: 3em;
+}
+/**-----------------------------------------/
+ * Flash image, under navbar
+ *-----------------------------------------*/
+.region-flash {
+    #desinax-vgrid.column(@columns);
+}
+/**-----------------------------------------/
+ * Main, with or without sidebars
+ *-----------------------------------------*/
+.region-main {
+    #desinax-vgrid.column(@columns - 2);
+    #desinax-vgrid.push(1);
+    min-height: 600px;
+
+    &.has-sidebar {
+        #desinax-vgrid.column(@columns * 3 / 4);
+        #desinax-vgrid.push(0);
+    }
+
+    &.has-sidebar-left {
+        min-height: 408px;
+    }
+
+    &.has-sidebar-right {
+        #desinax-vgrid.column(@columns * 3 / 4 - 1);
+        min-height: 456px;
+    }
+
+    &.has-sidebar-left.has-sidebar-right {
+        #desinax-vgrid.column(@columns * 3 / 4 - 2);
+        #desinax-vgrid.push(1);
+        text-align: center;
+    }
+}
+/**-----------------------------------------/
+ * Sidebars
+ *-----------------------------------------*/
+.region-sidebar-left,
+.region-sidebar-right {
+    #desinax-vgrid.column(@columns * 1 / 4);
+}
+/**-----------------------------------------/
+ * Sidebar right only
+ *-----------------------------------------*/
+.region-sidebar-right {
+    #desinax-vgrid.push(1);
+}
+/**-----------------------------------------/
+ * Sidebar both left and right
+ *-----------------------------------------*/
+.region-sidebar-left.has-sidebar-right,
+.region-sidebar-right.has-sidebar-left {
+    #desinax-vgrid.column(3);
+}
+
+.region-sidebar-right.has-sidebar-left {
+    #desinax-vgrid.push(1);
+}
+/**-----------------------------------------/
+ * Positioning
+ *-----------------------------------------*/
+.center {
+    text-align: center;
+}
+/**-----------------------------------------/
+ * Main contents
+ *-----------------------------------------*/
+.figure.family {
+    margin: 0;
+    text-align: center;
+}
+
+.figure.family p {
+    margin-top: 0;
+    font-style: italic;
+}
+
+.figure.om-image p {
+    margin-top: 0;
+    text-align: center;
+}
+
+.blogg {
+    clear: both;
+}
+/**-----------------------------------------/
+ * Article
+ *-----------------------------------------*/
+article {
+    margin-bottom: 24px;
+}
+/**-----------------------------------------/
+ * Table
+ *-----------------------------------------*/
+table.content,
+table.movie {
+    border-collapse: collapse;
+    border: 2px solid black;
+    padding: 2em;
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    width: 100%;
+    overflow: hidden;
+
+    thead {
+        border: 1px solid black;
+        background-color: #165c87;
+        color: white;
+
+        a {
+            color: white;
+        }
+
+        a:hover {
+            color: #4caf50;
+        }
+    }
+
+    td {
+        padding: 6px;
+    }
+
+    tr {
+        border: 1px solid black;
+    }
+
+    tr:hover:not(.first) {
+            background-color: @rowHover;
+            color: white;
+        }
+}
+
+.fixed {
+    table-layout: fixed;
+}
+/**-----------------------------------------/
+ * Form
+ *-----------------------------------------*/
+.form {
+    margin: 0 auto;
+    margin-top: 24px;
+    width: 40%;
+
+    input,
+    select,
+    textArea {
+        width: 100%;
+        max-width: 100%;
+        max-height: auto;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        }
+    }
+
+.wide-form {
+    width: 80%;
+}
+
+.tall-text {
+    height: 200px;
+}
+/**-----------------------------------------/
+ * Guess game
+ *-----------------------------------------*/
+ .start-game {
+     font-size: 1.5em;
+     margin-top: 2em;
+ }
+
+.stack {
+    width: 100px;
+    font-size: 2em;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 1em;
+}
+
+.wide {
+    width: 200px;
+    font-size: 1.5em;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 1em;
+}
+
+.result {
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.correct {
+    color: green;
+}
+
+.wrong {
+    color: red;
+}
+
+.cheat {
+    color: red;
+    font-size: 1.5em;
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+
+}
+
+.game-controls form {
+    margin: 0 20px;
+}
+/**-----------------------------------------/
+ * Dice game
+ *-----------------------------------------*/
+.dice-sprite {
+    display: inline-block;
+    padding: 0;
+    margin: 0 4px 0 0;
+    width: 32px;
+    height: 32px;
+    background: url(../img/dice-faces.jpg) no-repeat;
+}
+
+.dice-sprite.dice-1 { background-position: -160px 0; }
+.dice-sprite.dice-2 { background-position: -128px 0; }
+.dice-sprite.dice-3 { background-position: -96px 0; }
+.dice-sprite.dice-4 { background-position: -64px 0; }
+.dice-sprite.dice-5 { background-position: -32px 0; }
+.dice-sprite.dice-6 { background-position: 0 0; }
+
+.red {
+    color: red;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.histogram {
+    border: 2px solid black;
+    border-radius: 20px;
+    background: #165c87;
+    color: white;
+    font-weight: bold;
+    padding: 0 8px 0 8px;
+    margin: 0 auto;
+    width: 38%;
+    margin-bottom: 2em;
+}
+
+.hist-header {
+    color: #cbca70;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+
+.left {
+    text-align: left;
+}
+/**-----------------------------------------/
+ * Movie
+ *-----------------------------------------*/
+ pre {
+     overflow: auto;
+ }
+
+.reset {
+    margin: 48px;
+}
+
+.movieNav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    background-image: @headfoot;
+    border-radius: 6px;
+
+    a {
+        padding: 1em;
+        color: @headfootText;
+    }
+}
+/**-----------------------------------------/
+ * Content
+ *-----------------------------------------*/
+ a.icons.blue {
+     color: blue;
+ }
+
+ a.icons.red {
+     color: red;
+ }
+
+ a.icons.green {
+     color: green;
+ }
+
+ a:hover.icons {
+     opacity: 0.7;
+ }
+
+ .menu {
+     position: relative;
+     margin-bottom: 48px;
+ }
+
+ #message {
+     -webkit-animation: cssAnimation 3s forwards;
+     animation: cssAnimation 3s forwards;
+     position: absolute;
+     left: 25%;
+     width: 50%;
+     color: white;
+     padding: 4px 4px;
+     background-color: #4caf50;
+     box-sizing: border-box;
+     border-radius: 0 0 8px 8px;
+ }
+ @keyframes cssAnimation {
+     0%   {opacity: 1;}
+     90%  {opacity: 1;}
+     100% {opacity: 0;}
+ }
+ @-webkit-keyframes cssAnimation {
+     0%   {opacity: 1;}
+     90%  {opacity: 1;}
+     100% {opacity: 0;}
+ }
+
+input.check {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    margin-left: 4px;
+    margin-right: 4px;
+    top: -1px;
+}
+/**-----------------------------------------/
+ * Buttons
+ *-----------------------------------------*/
+.button {
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    box-sizing: border-box;
+    background-color: #0a176f;
+    color: white;
+    width: 10em;
+    padding: 15px 32px;
+    margin-right: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.wide-button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+
+.invert {
+    background-color: #4caf50;
+}
+
+.button:hover {
+    background-color: #4caf50;
+    text-decoration: none;
+}
+/**-----------------------------------------/
+ * Breadcrumbs, controls for reports
+ *-----------------------------------------*/
+.region-breadcrumb {
+    #desinax-vgrid.column(@columns);
+}
+
+.region-breadcrumb li {
+    display: inline-block;
+
+    &:after {
+        font-family: "Font Awesome 5 Free";
+        content: " \f101";
+    }
+}
+
+.next {
+    float: right;
+}
+
+.previous {
+    float: left;
+}
+
+.next-previous {
+    overflow: auto;
+    padding-top: @magicNumber;
+}
+/**-----------------------------------------/
+ * Byline
+ *-----------------------------------------*/
+.region-after-main {
+    #desinax-vgrid.column(@columns);
+}
+
+.figure.Paul {
+    margin-bottom: @magicNumber;
+}
+/**-----------------------------------------/
+ * Footer columns
+ *-----------------------------------------*/
+.footer-column {
+    #desinax-vgrid.column(@columns / 3);
+    text-align: center;
+
+    & a {
+        color: white;
+    }
+
+    & h4 {
+        border: none;
+    }
+}
+
+.footer-column-1,
+.footer-column-2 {
+    border-right: 2px solid black;
+}
+/**-----------------------------------------/
+ * Bottom footer
+ *-----------------------------------------*/
+.site-footer {
+    #desinax-vgrid.column(@columns);
+    text-align: center;
+    border-top: 1px solid black;
+}
+/**-----------------------------------------/
+ * End of layout
+ *-----------------------------------------*/
