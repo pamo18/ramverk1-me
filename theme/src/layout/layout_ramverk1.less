@@ -168,6 +168,39 @@ article {
     margin-bottom: 24px;
 }
 /**-----------------------------------------/
+ * IP address
+ *-----------------------------------------*/
+.ip {
+    width: 100%;
+    height: 100px;
+    font-size: 1.25rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.input-ip {
+    width: 80%;
+}
+
+.ip-valid {
+    color: green;
+}
+
+.ip-invalid {
+    color: red;
+}
+
+.test-ip {
+    text-align: center;
+    float: left;
+}
+
+.test-ip-json {
+    text-align: center;
+    float: right;
+}
+
+/**-----------------------------------------/
  * Table
  *-----------------------------------------*/
 table.content,
@@ -232,15 +265,65 @@ table.movie {
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
+        font-size: 1.25rem;
         }
     }
 
+.wider-form {
+    width: 50%;
+}
+
 .wide-form {
-    width: 80%;
+    width: 100%;
 }
 
 .tall-text {
     height: 200px;
+}
+/**-----------------------------------------/
+ * Buttons
+ *-----------------------------------------*/
+.button {
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    box-sizing: border-box;
+    background-color: #0a176f;
+    color: white;
+    width: 10em;
+    padding: 15px 32px;
+    margin-right: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.button.wide-button {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+}
+
+.button.narrow-button {
+    display: block;
+    width: 8em;
+    padding: 12px 20px;
+}
+
+.button.narrow-button.center {
+    margin: 0 auto;
+    margin-top: 24px;
+}
+
+.invert {
+    background-color: #4caf50;
+}
+
+.button:hover {
+    background-color: #4caf50;
+    text-decoration: none;
 }
 /**-----------------------------------------/
  * Guess game
@@ -420,41 +503,6 @@ input.check {
     margin-left: 4px;
     margin-right: 4px;
     top: -1px;
-}
-/**-----------------------------------------/
- * Buttons
- *-----------------------------------------*/
-.button {
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    box-sizing: border-box;
-    background-color: #0a176f;
-    color: white;
-    width: 10em;
-    padding: 15px 32px;
-    margin-right: 5px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 1em;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-}
-
-.wide-button {
-    display: block;
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-}
-
-.invert {
-    background-color: #4caf50;
-}
-
-.button:hover {
-    background-color: #4caf50;
-    text-decoration: none;
 }
 /**-----------------------------------------/
  * Breadcrumbs, controls for reports

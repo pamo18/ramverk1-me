@@ -5157,20 +5157,20 @@ figure.figure-codepen {
 * Page style
 *-----------------------------------------*/
 .wrap-all {
-  background-color: #e6f2f3;
+  background-color: #E0DFD1;
 }
 .rm-default,
 .rm-default ul {
-  background-image: linear-gradient(to bottom, #165c87, black);
+  background: #060d13;
   color: white;
 }
 a {
-  color: #165c87;
+  color: #18299A;
   text-decoration: none;
 }
 .outer-wrap-footer,
 .inner-wrap-footer {
-  background-image: linear-gradient(to bottom, #165c87, black);
+  background: #060d13;
   color: white;
 }
 /**-----------------------------------------/
@@ -5179,10 +5179,11 @@ a {
 html {
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: black;
+  background-color: #060d13;
 }
 body {
   font: 16px/1.5 "sans-serif";
+  color: black;
 }
 img {
   max-width: 100%;
@@ -5734,6 +5735,33 @@ article {
   margin-bottom: 24px;
 }
 /**-----------------------------------------/
+ * IP address
+ *-----------------------------------------*/
+.ip {
+  width: 100%;
+  height: 100px;
+  font-size: 1.25rem;
+  padding: 1rem;
+  text-align: center;
+}
+.input-ip {
+  width: 80%;
+}
+.ip-valid {
+  color: green;
+}
+.ip-invalid {
+  color: red;
+}
+.test-ip {
+  text-align: center;
+  float: left;
+}
+.test-ip-json {
+  text-align: center;
+  float: right;
+}
+/**-----------------------------------------/
  * Table
  *-----------------------------------------*/
 table.content,
@@ -5797,12 +5825,56 @@ table.movie tr:hover:not(.first) {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  font-size: 1.25rem;
+}
+.wider-form {
+  width: 50%;
 }
 .wide-form {
-  width: 80%;
+  width: 100%;
 }
 .tall-text {
   height: 200px;
+}
+/**-----------------------------------------/
+ * Buttons
+ *-----------------------------------------*/
+.button {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  box-sizing: border-box;
+  background-color: #0a176f;
+  color: white;
+  width: 10em;
+  padding: 15px 32px;
+  margin-right: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1em;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+.button.wide-button {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+}
+.button.narrow-button {
+  display: block;
+  width: 8em;
+  padding: 12px 20px;
+}
+.button.narrow-button.center {
+  margin: 0 auto;
+  margin-top: 24px;
+}
+.invert {
+  background-color: #4caf50;
+}
+.button:hover {
+  background-color: #4caf50;
+  text-decoration: none;
 }
 /**-----------------------------------------/
  * Guess game
@@ -5914,7 +5986,7 @@ pre {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-evenly;
-  background-image: linear-gradient(to bottom, #165c87, black);
+  background-image: #060d13;
   border-radius: 6px;
 }
 .movieNav a {
@@ -5982,38 +6054,6 @@ input.check {
   margin-left: 4px;
   margin-right: 4px;
   top: -1px;
-}
-/**-----------------------------------------/
- * Buttons
- *-----------------------------------------*/
-.button {
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  box-sizing: border-box;
-  background-color: #0a176f;
-  color: white;
-  width: 10em;
-  padding: 15px 32px;
-  margin-right: 5px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 1em;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-}
-.wide-button {
-  display: block;
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-}
-.invert {
-  background-color: #4caf50;
-}
-.button:hover {
-  background-color: #4caf50;
-  text-decoration: none;
 }
 /**-----------------------------------------/
  * Breadcrumbs, controls for reports
@@ -6168,6 +6208,12 @@ input.check {
   .footer-column-2 {
     border-right: none;
     border-bottom: 1px solid black;
+  }
+  .test-ip {
+    float: none;
+  }
+  .test-ip-json {
+    float: none;
   }
 }
 /**

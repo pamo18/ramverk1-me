@@ -5,13 +5,14 @@
 /**-----------------------------------------/
 * Variables & Mixins
 *-----------------------------------------*/
-@html: black;
-@page: #e6f2f3;
-@headfoot: linear-gradient(to bottom, #165c87 , black);
+@html: #060d13;
+@page: #E0DFD1;
+@headfoot: #060d13;
 @headfootText: white;
-@links: #165c87;
+@links: #18299A;
 @weight: bold;
 @rowHover: #7e93a9;
+@color: black;
 /**
 * Show the typographic grid
 */
@@ -45,7 +46,7 @@ figure.figure-codepen {
 // Navbars
 .rm-default,
 .rm-default ul {
-     background-image: @headfoot;
+     background: @headfoot;
      color: @headfootText;
  }
 
@@ -56,7 +57,7 @@ a {
 // Footer
 .outer-wrap-footer,
 .inner-wrap-footer {
-    background-image: @headfoot;
+    background: @headfoot;
     color: @headfootText;
 }
 
@@ -72,6 +73,7 @@ html {
 body {
     // Activate the grid base font
     #desinax-hgrid.font(@fontSizeBody);
+    color: @color;
 }
 
 img {

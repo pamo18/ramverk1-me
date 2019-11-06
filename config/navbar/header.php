@@ -64,6 +64,11 @@ return [
             "title" => "Om denna webbplats.",
         ],
         [
+            "text" => "Validate IP",
+            "url" => "ip-validate",
+            "title" => "Test if ip-address is ip4 or ip6",
+        ],
+        [
             "text" => "Styleväljare",
             "url" => "style",
             "title" => "Välj stylesheet.",
