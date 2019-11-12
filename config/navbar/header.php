@@ -69,6 +69,11 @@ return [
             "title" => "Test if ip-address is ip4 or ip6",
         ],
         [
+            "text" => "Geotag IP",
+            "url" => "ip-geotag",
+            "title" => "Geotag an IP Address",
+        ],
+        [
             "text" => "Styleväljare",
             "url" => "style",
             "title" => "Välj stylesheet.",

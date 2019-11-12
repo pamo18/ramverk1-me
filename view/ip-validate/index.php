@@ -1,7 +1,7 @@
 <h1><?= $title ?></h1>
 <p>Below you can validate an IP Address to see if it is valid and which type it is.</p>
 <p>If the IP Address has a domain name then it is shown too.</p>
-<p>Click on the validate button too view the IP Address details on the current page.</p>
+<p>Click on the validate button to view the IP Address details on the current page.</p>
 <p>Click on the validate JSON button too show the IP Address details in JSON format, retrievable from <a href="ip-validate-json">/ip-validate-json</a></p>
 
 <form class="form wider-form center" action="ip-validate" method="post">
@@ -10,20 +10,13 @@
     <input class="button narrow-button center" type="submit" name="do-validate-json" value="Validate JSON" formaction="ip-validate-json">
 </form>
 
-<?php
-if ($ipAddress && $type === "invalid") { ?>
-    <div class="ip ip-invalid">
-        <p>The ip address <?= $ipAddress ?> is not a valid ip address</P>
-    </div>
-<?php
-} else if ($ipAddress) { ?>
-    <div class="ip ip-valid">
-        <p>The ip address <?= $ipAddress ?> is a valid <?= $type ?> address</P>
-        <p><?= ($domain != "Unavailable" ? "The domain name is: $domain" : null) ?></p>
-    </div>
-<?php
-}
-?>
+<div class="ip <?= ($status === "invalid" ? "ip-invalid" : null) ?>">
+    <?php if ($ipAddress) { ?>
+        <p>The ip address <?= $ipAddress ?> is <?= $status ?></P>
+        <p>The IP type is <?= $type ?></p>
+        <p>The domain name is <?= $domain ?></p>
+    <?php } ?>
+</div>
 
 <div class="test-ip">
     <h4>Test Validate</h4>

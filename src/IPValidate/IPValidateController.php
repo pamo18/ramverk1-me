@@ -4,6 +4,7 @@ namespace Pamo\IPValidate;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Pamo\IPValidate\IPValidate;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -32,6 +33,8 @@ class IPValidateController implements ContainerInjectableInterface
     public function initialize() : void
     {
         $this->base = "ip-validate";
+        $this->title = "Validate IP Address";
+        $this->ipValidator = new IPValidate;
     }
 
 
@@ -47,42 +50,26 @@ class IPValidateController implements ContainerInjectableInterface
 
         if ($request->getPost("ip-address") || $request->getGet("test-ip")) {
             $ipAddress = $request->getPost("ip-address", $request->getGet("test-ip"));
-
-            switch ($ipAddress) {
-                case (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)):
-                    $type = "IPv6";
-                    break;
-                case (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)):
-                    $type = "IPv4";
-                    break;
-                default:
-                    $type = "invalid";
-            }
-
-            $domainName = ($type != "invalid" ? gethostbyaddr($ipAddress) : null);
-            $domain = ($domainName && $domainName != $ipAddress ? $domainName : "Unavailable");
+            $validIP = $this->ipValidator->isValid($ipAddress);
+            $type = $validIP ? $this->ipValidator->getType($ipAddress) : null;
+            $domain = $validIP ? $this->ipValidator->getDomain($ipAddress) : null;
 
             return $response->redirect("$this->base?ip-address=$ipAddress&type=$type&domain=$domain");
-        } else {
-            $ipAddress = $request->getGet("ip-address", null);
-            $type = $request->getGet("type", null);
-            $domain = $request->getGet("domain", null);
-
-            if ($ipAddress === $domain) {
-                $domain = null;
-            }
-
-            $data = [
-                "title" => "Validate IP Address",
-                "ipAddress" => $ipAddress,
-                "type" => $type,
-                "domain" => $domain
-            ];
-
-            $page->add($this->base . "/index", $data);
-
-            return $page->render();
         }
+
+        $ipAddress = $request->getGet("ip-address", "");
+        $validIP = $this->ipValidator->isValid($ipAddress);
+        $data = [
+            "title" => $this->title,
+            "ipAddress" => $ipAddress,
+            "status" => $validIP ? "valid" : "invalid",
+            "type" => $validIP ? $request->getGet("type") : "unavailable",
+            "domain" => $validIP ? $request->getGet("domain") : "unavailable"
+        ];
+
+        $page->add($this->base . "/index", $data);
+
+        return $page->render();
     }
 
 

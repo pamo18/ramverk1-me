@@ -1,10 +1,11 @@
 <?php
 
-namespace Pamo\IPValidateJson;
+namespace Pamo\IPGeotag;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
 use Pamo\IPValidate\IPValidate;
+use Pamo\IPGeotag\IPGeotag;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -19,7 +20,7 @@ use Pamo\IPValidate\IPValidate;
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class IPValidateJsonController implements ContainerInjectableInterface
+class IPGeotagController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -32,9 +33,11 @@ class IPValidateJsonController implements ContainerInjectableInterface
      */
     public function initialize() : void
     {
-        $this->base = "ip-validate-json";
-        $this->title = "Validate IP Address to JSON";
+        $this->base = "ip-geotag";
+        $this->title = "Geotag IP Address";
         $this->ipValidator = new IPValidate;
+        $this->ipGeotager = new IPGeotag;
+        $this->ipGeotager->init();
     }
 
 
@@ -42,28 +45,36 @@ class IPValidateJsonController implements ContainerInjectableInterface
     /**
      * @return object
      */
-    public function indexAction() : array
+    public function indexAction() : object
     {
+        $page = $this->di->get("page");
         $request = $this->di->get("request");
+        $response = $this->di->get("response");
 
         if ($request->getPost("ip-address") || $request->getGet("test-ip")) {
             $ipAddress = $request->getPost("ip-address", $request->getGet("test-ip"));
-            $validIP = $this->ipValidator->isValid($ipAddress);
-            $data = [
-                "title" => $this->title,
-                "ipAddress" => $ipAddress,
-                "status" => $validIP ? "valid" : "invalid",
-                "type" => $validIP ? $this->ipValidator->getType($ipAddress) : "unavailable",
-                "domain" => $validIP ? $this->ipValidator->getDomain($ipAddress) : "unavailable"
-            ];
-        } else {
-            $data = [
-                "title" => $this->title,
-                "message" => "Post an ip address to the route /ip-address-json"
-            ];
+
+            return $response->redirect("$this->base?ip-address=$ipAddress");
         }
 
-        return [$data];
+        $ipAddress = $request->getGet("ip-address", $this->ipGeotager->getClientIP());
+        $validIP = $ipAddress ? $this->ipValidator->isValid($ipAddress) : null;
+        $geoTag = $validIP ? $this->ipGeotager->getAllDataSorted($ipAddress) : null;
+
+        if ($geoTag && !array_key_exists("Type", $geoTag)) {
+            $geoTag["Type"] = $this->ipValidator->getType($ipAddress);
+        }
+
+        $data = [
+            "title" => $this->title,
+            "ipAddress" => $ipAddress,
+            "validIP" => $validIP,
+            "geoTag" => $geoTag
+        ];
+
+        $page->add($this->base . "/index", $data);
+
+        return $page->render();
     }
 
 
