@@ -4,8 +4,6 @@ namespace Pamo\IPGeotagJson;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Pamo\IPValidate\IPValidate;
-use Pamo\IPGeotag\IPGeotag;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -19,6 +17,7 @@ use Pamo\IPGeotag\IPGeotag;
  * requests for that mount point.
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
 class IPGeotagJsonController implements ContainerInjectableInterface
 {
@@ -35,9 +34,8 @@ class IPGeotagJsonController implements ContainerInjectableInterface
     {
         $this->base = "ip-geotag-json";
         $this->title = "Geotag IP Address to JSON";
-        $this->ipValidator = new IPValidate;
-        $this->ipGeotager = new IPGeotag;
-        $this->ipGeotager->init();
+        $this->ipValidator = $this->di->get("ip-validate");
+        $this->ipGeoTager = $this->di->get("ip-geotag");
     }
 
 
@@ -49,10 +47,24 @@ class IPGeotagJsonController implements ContainerInjectableInterface
     {
         $request = $this->di->get("request");
 
-        if ($request->getPost("ip-address") || $request->getGet("test-ip")) {
-            $ipAddress = $request->getPost("ip-address", $request->getGet("test-ip"));
+        switch (TRUE) {
+            case $request->getPost("ip-address", null):
+                $ipAddress = $request->getPost("ip-address");
+                break;
+            case $request->getGet("ip-address", null):
+                $ipAddress = $request->getGet("ip-address");
+                break;
+            case $request->getGet("test-ip", null);
+                $ipAddress = $request->getGet("test-ip");
+                break;
+            case $this->ipGeoTager->getClientIP($request->getPost("test", null)) !== "unknown":
+                $ipAddress = $this->ipGeoTager->getClientIP();
+                break;
+        }
+
+        if (isset($ipAddress)) {
             $validIP = $this->ipValidator->isValid($ipAddress);
-            $geoTag = $validIP ? $this->ipGeotager->getAllDataSorted($ipAddress) : null;
+            $geoTag = $validIP ? $this->ipGeoTager->getAllDataSorted($ipAddress) : null;
 
             if (is_array($geoTag) && !isset($geoTag["Type"])) {
                 $geoTag["Type"] = $this->ipValidator->getType($ipAddress);

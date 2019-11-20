@@ -2,7 +2,7 @@
 <p>Below you can geotag an IP Address.</p>
 <p>If the IP Address can be geotagged then the results will be shown in a table along with a map and country flag.</p>
 <p>Click on the Geotag button to view the geotag details on the current page.</p>
-<p>Click on the Geotag JSON button too show the geotag details in JSON format, retrievable from <a href="ip-geotag-json">/ip-geotag-json</a></p>
+<p>Click on the Geotag JSON button to view the geotag details in JSON format.</p>
 
 <form class="form wider-form center" action="ip-geotag" method="post">
     <input class="center" type="text" name="ip-address" placeholder="Type ip address here" value=<?= $ipAddress ?>>
@@ -11,7 +11,11 @@
 </form>
 
 <?php if ($geoTag && array_key_exists("Country name", $geoTag)) { ?>
-    <h2 class="center"><?= $geoTag["Country name"] ?></h2>
+    <h2 class="center">
+        <?= array_key_exists('City', $geoTag) ? $geoTag["City"] . ", " : null ?>
+        <?= array_key_exists('Region name', $geoTag) ? $geoTag['Region name'] . ", " : null ?>
+        <?= $geoTag['Country name'] ?>
+    </h2>
     <div class="geotag-columns">
         <div class="geotag-column-1">
             <iframe class="geotag-iframe"
@@ -45,7 +49,7 @@
         <?php endforeach; ?>
     </table>
 <?php } else if (!$validIP && $ipAddress) { ?>
-    <div class="ip ip-invalid">
+    <div class="search invalid">
         <p>The ip address <?= $ipAddress ?> is invalid</P>
     </div>
 <?php } ?>

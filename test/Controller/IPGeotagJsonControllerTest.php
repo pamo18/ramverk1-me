@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Test the SampleJsonController.
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
 class IPGeotagJsonControllerTest extends TestCase
 {
@@ -49,13 +50,41 @@ class IPGeotagJsonControllerTest extends TestCase
     {
         $res = $this->controller->indexAction();
         $this->assertInternalType("array", $res);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "post" => [
+                "test" => "unknown"
+            ]
+        ]);
+
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
         $json = $res[0];
 
         $exp = "Post an ip address to the route /ip-geotag-json";
         $this->assertContains($exp, $json);
 
         /*-------------------------------------*/
-        /*-New post test-----------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "post" => [
+                "test" => "known"
+            ]
+        ]);
+
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
+        $json = $res[0];
+
+        $exp = "Geotag IP Address to JSON";
+        $this->assertContains($exp, $json);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
         /*-------------------------------------*/
         $this->di->request->setGlobals([
             "post" => [
@@ -71,7 +100,7 @@ class IPGeotagJsonControllerTest extends TestCase
         $this->assertContains($exp, $json);
 
         /*-------------------------------------*/
-        /*-New post test-----------------------*/
+        /*-New test-----------------------*/
         /*-------------------------------------*/
         $this->di->request->setGlobals([
             "post" => [
@@ -87,7 +116,7 @@ class IPGeotagJsonControllerTest extends TestCase
         $this->assertContains($exp, $json);
 
         /*-------------------------------------*/
-        /*-New post test-----------------------*/
+        /*-New test-----------------------*/
         /*-------------------------------------*/
         $this->di->request->setGlobals([
             "post" => [
@@ -103,7 +132,7 @@ class IPGeotagJsonControllerTest extends TestCase
         $this->assertContains($exp, $json);
 
         /*-------------------------------------*/
-        /*-New post test-----------------------*/
+        /*-New test-----------------------*/
         /*-------------------------------------*/
         $this->di->request->setGlobals([
             "post" => [
@@ -116,6 +145,38 @@ class IPGeotagJsonControllerTest extends TestCase
         $json = $res[0];
 
         $exp = "invalid";
+        $this->assertContains($exp, $json);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "get" => [
+                "test-ip" => "8.8.8.8"
+            ]
+        ]);
+
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
+        $json = $res[0];
+
+        $exp = "valid";
+        $this->assertContains($exp, $json);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "get" => [
+                "ip-address" => "8.8.8.8"
+            ]
+        ]);
+
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
+        $json = $res[0];
+
+        $exp = "valid";
         $this->assertContains($exp, $json);
     }
 

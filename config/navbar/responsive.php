@@ -65,6 +65,11 @@ return [
             "title" => "Om denna webbplats.",
         ],
         [
+            "text" => "REST API",
+            "url" => "rest-api",
+            "title" => "REST API instructions",
+        ],
+        [
             "text" => "Validate IP",
             "url" => "ip-validate",
             "title" => "Test if ip-address is ip4 or ip6",
@@ -75,14 +80,9 @@ return [
             "title" => "Geotag an IP Address",
         ],
         [
-            "text" => "Styleväljare",
-            "url" => "style",
-            "title" => "Välj stylesheet.",
-        ],
-        [
-            "text" => "Verktyg",
-            "url" => "verktyg",
-            "title" => "Verktyg och möjligheter för utveckling.",
+            "text" => "Weather",
+            "url" => "weather",
+            "title" => "Get the weather for a place.",
         ],
     ],
 ];

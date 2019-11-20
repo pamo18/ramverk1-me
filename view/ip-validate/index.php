@@ -10,7 +10,7 @@
     <input class="button narrow-button center" type="submit" name="do-validate-json" value="Validate JSON" formaction="ip-validate-json">
 </form>
 
-<div class="ip <?= ($status === "invalid" ? "ip-invalid" : null) ?>">
+<div class="search <?= ($status === "invalid" ? "invalid" : null) ?>">
     <?php if ($ipAddress) { ?>
         <p>The ip address <?= $ipAddress ?> is <?= $status ?></P>
         <p>The IP type is <?= $type ?></p>

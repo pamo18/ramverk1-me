@@ -4,7 +4,6 @@ namespace Pamo\IPValidateJson;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Pamo\IPValidate\IPValidate;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -34,7 +33,7 @@ class IPValidateJsonController implements ContainerInjectableInterface
     {
         $this->base = "ip-validate-json";
         $this->title = "Validate IP Address to JSON";
-        $this->ipValidator = new IPValidate;
+        $this->ipValidator = $this->di->get("ip-validate");
     }
 
 
@@ -46,8 +45,19 @@ class IPValidateJsonController implements ContainerInjectableInterface
     {
         $request = $this->di->get("request");
 
-        if ($request->getPost("ip-address") || $request->getGet("test-ip")) {
-            $ipAddress = $request->getPost("ip-address", $request->getGet("test-ip"));
+        switch (TRUE) {
+            case $request->getPost("ip-address", null):
+                $ipAddress = $request->getPost("ip-address");
+                break;
+            case $request->getGet("ip-address", null):
+                $ipAddress = $request->getGet("ip-address");
+                break;
+            case $request->getGet("test-ip", null);
+                $ipAddress = $request->getGet("test-ip");
+                break;
+        }
+
+        if (isset($ipAddress)) {
             $validIP = $this->ipValidator->isValid($ipAddress);
             $data = [
                 "title" => $this->title,

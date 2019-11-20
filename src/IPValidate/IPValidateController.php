@@ -4,7 +4,6 @@ namespace Pamo\IPValidate;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Pamo\IPValidate\IPValidate;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -34,7 +33,7 @@ class IPValidateController implements ContainerInjectableInterface
     {
         $this->base = "ip-validate";
         $this->title = "Validate IP Address";
-        $this->ipValidator = new IPValidate;
+        $this->ipValidator = $this->di->get("ip-validate");
     }
 
 

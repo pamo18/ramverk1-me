@@ -4,8 +4,6 @@ namespace Pamo\IPGeotag;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Pamo\IPValidate\IPValidate;
-use Pamo\IPGeotag\IPGeotag;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -35,9 +33,8 @@ class IPGeotagController implements ContainerInjectableInterface
     {
         $this->base = "ip-geotag";
         $this->title = "Geotag IP Address";
-        $this->ipValidator = new IPValidate;
-        $this->ipGeotager = new IPGeotag;
-        $this->ipGeotager->init();
+        $this->ipValidator = $this->di->get("ip-validate");
+        $this->ipGeotager = $this->di->get("ip-geotag");
     }
 
 

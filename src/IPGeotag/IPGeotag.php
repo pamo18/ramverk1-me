@@ -12,9 +12,9 @@ class IPGeotag
      * @var string $accessKey for authentication.
      * @var array $allData to store Geotag data.
      */
-    private $baseAddress = "";
-    private $accessKey = "";
-    private $allData = [];
+    private $baseAddress;
+    private $accessKey;
+    private $allData;
 
 
 
@@ -25,13 +25,12 @@ class IPGeotag
      * @param string $accessKey for authentication.
      *
      */
-    public function init(
-        string $baseAddress = "http://api.ipstack.com",
-        string $accessKey = "98792395e0e82aad9e491f1865f6f39f"
-        )
+    public function init(string $baseAddress = null, string $accessKey = null)
     {
-        $this->baseAddress = $baseAddress;
-        $this->accessKey = $accessKey;
+        $api = require ANAX_INSTALL_PATH . "/config/api.php";
+        $this->baseAddress = $baseAddress ?? $api["url"]["geoTag"];
+        $this->accessKey = $accessKey ?? $api["key"]["geoTag"];
+        $this->allData = [];
     }
 
 
@@ -108,29 +107,33 @@ class IPGeotag
      *
      * @return string
      */
-    public function getClientIP() : string
+    public function getClientIP($test = null) : string
     {
-        switch (TRUE) {
-            case (isset($_SERVER['HTTP_CLIENT_IP'])):
-                $ipAddress = $_SERVER['HTTP_CLIENT_IP'];
-                break;
-            case (isset($_SERVER['HTTP_X_FORWARDED_FOR'])):
-                $ipAddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-                break;
-            case (isset($_SERVER['HTTP_X_FORWARDED'])):
-                $ipAddress = $_SERVER['HTTP_X_FORWARDED'];
-                break;
-            case (isset($_SERVER['HTTP_FORWARDED_FOR'])):
-                $ipAddress = $_SERVER['HTTP_FORWARDED_FOR'];
-                break;
-            case (isset($_SERVER['HTTP_FORWARDED'])):
-                $ipAddress = $_SERVER['HTTP_FORWARDED'];
-                break;
-            case (isset($_SERVER['REMOTE_ADDR'])):
-                $ipAddress = $_SERVER['REMOTE_ADDR'];
-                break;
-            default:
-                $ipAddress = 'unknown';
+        if ($test) {
+            return $test;
+        } else {
+            switch (TRUE) {
+                case (isset($_SERVER['HTTP_CLIENT_IP'])):
+                    $ipAddress = $_SERVER['HTTP_CLIENT_IP'];
+                    break;
+                case (isset($_SERVER['HTTP_X_FORWARDED_FOR'])):
+                    $ipAddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                    break;
+                case (isset($_SERVER['HTTP_X_FORWARDED'])):
+                    $ipAddress = $_SERVER['HTTP_X_FORWARDED'];
+                    break;
+                case (isset($_SERVER['HTTP_FORWARDED_FOR'])):
+                    $ipAddress = $_SERVER['HTTP_FORWARDED_FOR'];
+                    break;
+                case (isset($_SERVER['HTTP_FORWARDED'])):
+                    $ipAddress = $_SERVER['HTTP_FORWARDED'];
+                    break;
+                case (isset($_SERVER['REMOTE_ADDR'])):
+                    $ipAddress = $_SERVER['REMOTE_ADDR'];
+                    break;
+                default:
+                    $ipAddress = 'unknown';
+            }
         }
 
         return $ipAddress;

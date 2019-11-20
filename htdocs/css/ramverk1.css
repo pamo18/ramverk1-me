@@ -5735,9 +5735,9 @@ article {
   margin-bottom: 24px;
 }
 /**-----------------------------------------/
- * IP address
+ * Search
  *-----------------------------------------*/
-.ip {
+.search {
   width: 100%;
   max-height: 100px;
   padding-top: 12px;
@@ -5746,7 +5746,7 @@ article {
   font-size: 1.25rem;
   text-align: center;
 }
-.ip-invalid {
+.invalid {
   color: red;
 }
 .test-ip {
@@ -5835,6 +5835,11 @@ table.results-table tr:hover:not(.first) {
 .fixed {
   table-layout: fixed;
 }
+.weather-icon {
+  position: relative;
+  border-radius: 10px;
+  height: 50px;
+}
 /**-----------------------------------------/
  * Form
  *-----------------------------------------*/
@@ -5867,6 +5872,12 @@ table.results-table tr:hover:not(.first) {
 .tall-text {
   height: 200px;
 }
+.form .button {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 1.2rem;
+}
 /**-----------------------------------------/
  * Buttons
  *-----------------------------------------*/
@@ -5876,12 +5887,12 @@ table.results-table tr:hover:not(.first) {
   box-sizing: border-box;
   background-color: #0a176f;
   color: white;
-  width: 10em;
+  width: 12em;
   padding: 15px 32px;
   margin-right: 5px;
   text-align: center;
   text-decoration: none;
-  font-size: 1em;
+  font-size: 1rem;
   border-radius: 5px;
   border: none;
   cursor: pointer;
@@ -5892,13 +5903,8 @@ table.results-table tr:hover:not(.first) {
   padding: 12px 20px;
 }
 .button.narrow-button {
-  display: block;
-  width: 8em;
-  padding: 12px 20px;
-}
-.button.narrow-button.center {
-  margin: 0 auto;
-  margin-top: 24px;
+  width: 12em;
+  padding: 12px;
 }
 .invert {
   background-color: #4caf50;

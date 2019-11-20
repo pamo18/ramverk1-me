@@ -1,14 +1,15 @@
 <?php
 
-namespace Pamo\IPValidateJson;
+namespace Pamo\WeatherJson;
 
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Test the SampleJsonController.
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
-class IPValidateJsonControllerTest extends TestCase
+class WeatherJsonControllerTest extends TestCase
 {
 
     // Create the di container.
@@ -35,7 +36,7 @@ class IPValidateJsonControllerTest extends TestCase
         $di = $this->di;
 
         // Setup the controller
-        $this->controller = new IPValidateJsonController();
+        $this->controller = new WeatherJsonController();
         $this->controller->setDI($this->di);
         $this->controller->initialize();
     }
@@ -47,19 +48,33 @@ class IPValidateJsonControllerTest extends TestCase
      */
     public function testIndexAction()
     {
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "post" => [
+                "test" => "8.8.8.8"
+            ]
+        ]);
         $res = $this->controller->indexAction();
         $this->assertInternalType("array", $res);
         $json = $res[0];
 
-        $exp = "Post an ip address to the route /ip-address-json";
+        $exp = "Weather";
         $this->assertContains($exp, $json);
 
         /*-------------------------------------*/
-        /*-New post test-----------------------*/
+        /*-New test-----------------------*/
         /*-------------------------------------*/
         $this->di->request->setGlobals([
             "post" => [
-                "ip-address" => "8.8.8.8"
+                "test" => "unknown"
             ]
         ]);
 
@@ -67,18 +82,23 @@ class IPValidateJsonControllerTest extends TestCase
         $this->assertInternalType("array", $res);
         $json = $res[0];
 
-        $exp = "8.8.8.8";
-        $this->assertContains($exp, $json);
-
-        $exp = "IPv4";
+        $exp = "Weather";
         $this->assertContains($exp, $json);
 
         /*-------------------------------------*/
-        /*-New post test-----------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $exp = "Post an ip address to the route /ip-geotag-json";
+        $exp2 = "Geotag IP Address to JSON";
+        $this->assertContains($exp || $exp2, $json);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
         /*-------------------------------------*/
         $this->di->request->setGlobals([
             "post" => [
-                "ip-address" => "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+                "search" => "37.419158935547,-122.07540893555",
+                "do-weather-history-json" => TRUE
             ]
         ]);
 
@@ -86,37 +106,15 @@ class IPValidateJsonControllerTest extends TestCase
         $this->assertInternalType("array", $res);
         $json = $res[0];
 
-        $exp = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
-        $this->assertContains($exp, $json);
-
-        $exp = "IPv6";
+        $exp = "USA";
         $this->assertContains($exp, $json);
 
         /*-------------------------------------*/
-        /*-New post test-----------------------*/
-        /*-------------------------------------*/
-        $this->di->request->setGlobals([
-            "post" => [
-                "ip-address" => "10.258.0.0"
-            ]
-        ]);
-
-        $res = $this->controller->indexAction();
-        $this->assertInternalType("array", $res);
-        $json = $res[0];
-
-        $exp = "10.258.0.0";
-        $this->assertContains($exp, $json);
-
-        $exp = "invalid";
-        $this->assertContains($exp, $json);
-
-        /*-------------------------------------*/
-        /*-New post test-----------------------*/
+        /*-New test-----------------------*/
         /*-------------------------------------*/
         $this->di->request->setGlobals([
             "get" => [
-                "ip-address" => "8.8.8.8"
+                "search" => "källby"
             ]
         ]);
 
@@ -124,15 +122,15 @@ class IPValidateJsonControllerTest extends TestCase
         $this->assertInternalType("array", $res);
         $json = $res[0];
 
-        $exp = "valid";
+        $exp = "Sweden";
         $this->assertContains($exp, $json);
 
         /*-------------------------------------*/
-        /*-New post test-----------------------*/
+        /*-New test-----------------------*/
         /*-------------------------------------*/
         $this->di->request->setGlobals([
-            "get" => [
-                "test-ip" => "8.8.8.8"
+            "post" => [
+                "search" => "0.0.0.0"
             ]
         ]);
 
@@ -140,7 +138,87 @@ class IPValidateJsonControllerTest extends TestCase
         $this->assertInternalType("array", $res);
         $json = $res[0];
 
-        $exp = "valid";
+        $exp = "Weather";
+        $this->assertContains($exp, $json);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "post" => [
+                "search" => "8.8.8.8"
+            ]
+        ]);
+
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
+        $json = $res[0];
+
+        $exp = "Weather";
+        $this->assertContains($exp, $json);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "post" => [
+                "search" => "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            ]
+        ]);
+
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
+        $json = $res[0];
+
+        $exp = "Weather";
+        $this->assertContains($exp, $json);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "post" => [
+                "search" => "italy"
+            ]
+        ]);
+
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
+        $json = $res[0];
+
+        $exp = "Italy";
+        $this->assertContains($exp, $json);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "get" => [
+                "search" => "italy"
+            ]
+        ]);
+
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
+        $json = $res[0];
+
+        $exp = "Italy";
+        $this->assertContains($exp, $json);
+
+        /*-------------------------------------*/
+        /*-New test-----------------------*/
+        /*-------------------------------------*/
+        $this->di->request->setGlobals([
+            "get" => [
+                "test-search" => "italy"
+            ]
+        ]);
+
+        $res = $this->controller->indexAction();
+        $this->assertInternalType("array", $res);
+        $json = $res[0];
+
+        $exp = "Italy";
         $this->assertContains($exp, $json);
     }
 
