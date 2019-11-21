@@ -45,14 +45,14 @@ class IPValidateJsonController implements ContainerInjectableInterface
     {
         $request = $this->di->get("request");
 
-        switch (TRUE) {
+        switch (true) {
             case $request->getPost("ip-address", null):
                 $ipAddress = $request->getPost("ip-address");
                 break;
             case $request->getGet("ip-address", null):
                 $ipAddress = $request->getGet("ip-address");
                 break;
-            case $request->getGet("test-ip", null);
+            case $request->getGet("test-ip", null):
                 $ipAddress = $request->getGet("test-ip");
                 break;
         }

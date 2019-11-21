@@ -82,7 +82,7 @@ class Weather
             $data = $this->multiCurl->get($apiRequest);
 
             if ($data) {
-                foreach($data as $row) {
+                foreach ($data as $row) {
                     if (array_key_exists("daily", $row) && array_key_exists("data", $row["daily"])) {
                         array_walk($row["daily"]["data"], array('self', 'build'));
                     }

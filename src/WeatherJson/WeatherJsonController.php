@@ -50,14 +50,14 @@ class WeatherJsonController implements ContainerInjectableInterface
     {
         $request = $this->di->get("request");
 
-        switch (TRUE) {
+        switch (true) {
             case $request->getPost("search", null):
                 $search = $request->getPost("search");
                 break;
             case $request->getGet("search", null):
                 $search = $request->getGet("search");
                 break;
-            case $request->getGet("test-search", null);
+            case $request->getGet("test-search", null):
                 $search = $request->getGet("test-search");
                 break;
             case $this->ipGeoTager->getClientIP($request->getPost("test", null)) !== "unknown":

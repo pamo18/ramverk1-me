@@ -98,7 +98,7 @@ class WeatherJsonControllerTest extends TestCase
         $this->di->request->setGlobals([
             "post" => [
                 "search" => "37.419158935547,-122.07540893555",
-                "do-weather-history-json" => TRUE
+                "do-weather-history-json" => true
             ]
         ]);
 

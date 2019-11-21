@@ -26,7 +26,7 @@ class MultiCurl
         //create the multiple cURL handle
         $curlHandler = curl_multi_init();
 
-        foreach($urls as $url) {
+        foreach ($urls as $url) {
             // create cURL resources
             ${"ch$id"} = curl_init($url);
 
@@ -48,10 +48,10 @@ class MultiCurl
 
         $id = 1;
 
-        foreach($urls as $url) {
+        foreach ($urls as $url) {
             //close the handle
             curl_multi_remove_handle($curlHandler, ${"ch$id"});
-            $contents = json_decode(curl_multi_getcontent(${"ch$id"}), JSON_UNESCAPED_UNICODE |TRUE);
+            $contents = json_decode(curl_multi_getcontent(${"ch$id"}), JSON_UNESCAPED_UNICODE |true);
             $data[] = $contents;
             $id++;
         }

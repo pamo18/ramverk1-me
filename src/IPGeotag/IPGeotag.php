@@ -70,7 +70,7 @@ class IPGeotag
             "$this->baseAddress/$ipAddress?access_key=$this->accessKey"
         );
 
-        $resultArray = json_decode($result, TRUE);
+        $resultArray = json_decode($result, true);
 
         array_walk_recursive($resultArray, array('self', 'build'));
 
@@ -112,7 +112,7 @@ class IPGeotag
         if ($test) {
             return $test;
         } else {
-            switch (TRUE) {
+            switch (true) {
                 case (isset($_SERVER['HTTP_CLIENT_IP'])):
                     $ipAddress = $_SERVER['HTTP_CLIENT_IP'];
                     break;
