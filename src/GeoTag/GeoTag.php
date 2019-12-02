@@ -29,12 +29,13 @@ class GeoTag
      * @param string $apiKey for authentication.
      *
      */
-    public function init(string $baseAddress = null, string $apiKey = null)
+    public function init()
     {
         $this->multiCurl = new MultiCurl();
-        $api = require ANAX_INSTALL_PATH . "/config/api.php";
-        $this->baseAddress = $baseAddress ?? $api["url"]["opencagedata"];
-        $this->apiKey = $apiKey ?? $api["key"]["opencagedata"];
+        $filename = ANAX_INSTALL_PATH . "/config/api.php";
+        $api =  file_exists($filename) ? require $filename : null;
+        $this->baseAddress = $api ? $api["url"]["opencagedata"] : getenv("API_URL_OPENCAGEDATA");
+        $this->apiKey = $api ? $api["key"]["opencagedata"] : getenv("API_KEY_OPENCAGEDATA");
         $this->allData = [];
     }
 

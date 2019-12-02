@@ -12,14 +12,12 @@ class Weather
     /**
      * @var array $data to store weather data.
      * @var object $multiCurl tool.
-     * @var array $api all available API's.
      * @var string $baseAddress for the API.
      * @var string $apiKey for authentication.
      * @var array $config for API url.
      */
     private $data;
     private $multiCurl;
-    private $api;
     private $baseAddress;
     private $apiKey;
     private $forecastConfig;
@@ -34,13 +32,16 @@ class Weather
      * @param string $apiKey for authentication.
      *
      */
-    public function init(string $baseAddress = null, string $apiKey = null)
+    public function init()
     {
         $this->data = [];
         $this->multiCurl = new MultiCurl();
-        $this->api = require ANAX_INSTALL_PATH . "/config/api.php";
-        $this->baseAddress = $baseAddress ?? $this->api["url"]["weather"];
-        $this->apiKey = $apiKey ?? $this->api["key"]["weather"];
+
+        $filename = ANAX_INSTALL_PATH . "/config/api.php";
+        $api =  file_exists($filename) ? require $filename : null;
+        $this->baseAddress = $api ? $api["url"]["weather"] : getenv("API_URL_WEATHER");
+        $this->apiKey = $api ? $api["key"]["weather"] : getenv("API_KEY_WEATHER");
+
         $this->forecastConfig = [
             "exclude" => "exclude=[currently,minutely,hourly,alerts,flags]",
             "units" => "&units=si"
