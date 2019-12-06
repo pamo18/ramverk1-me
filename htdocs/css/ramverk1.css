@@ -5729,6 +5729,21 @@ hr::after {
   clear: both;
 }
 /**-----------------------------------------/
+ * Secondary nav
+ *-----------------------------------------*/
+.pageNav {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  background: #060d13;
+  border-radius: 5px;
+}
+.pageNav a {
+  color: white;
+  padding: 0.75em;
+  font-size: 1.25rem;
+}
+/**-----------------------------------------/
  * Article
  *-----------------------------------------*/
 article {
@@ -5840,18 +5855,28 @@ table.results-table tr:hover:not(.first) {
   border-radius: 10px;
   height: 50px;
 }
+.clickable {
+  cursor: pointer;
+}
 /**-----------------------------------------/
  * Form
  *-----------------------------------------*/
-.form {
+.htmlform fieldset {
+  border: none;
+}
+.form,
+.htmlform {
   margin: 0 auto;
   margin-top: 24px;
   margin-bottom: 24px;
   width: 40%;
 }
 .form input,
+.htmlform input,
 .form select,
-.form textArea {
+.htmlform select,
+.form textArea,
+.htmlform textArea {
   width: 100%;
   max-width: 100%;
   max-height: auto;
@@ -5881,7 +5906,9 @@ table.results-table tr:hover:not(.first) {
 /**-----------------------------------------/
  * Buttons
  *-----------------------------------------*/
-.button {
+.button,
+.htmlform input[type="submit"],
+.htmlform input[type="reset"] {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   box-sizing: border-box;
@@ -5896,6 +5923,12 @@ table.results-table tr:hover:not(.first) {
   border-radius: 5px;
   border: none;
   cursor: pointer;
+}
+.htmlform .buttonbar {
+  text-align: center;
+}
+.htmlform legend {
+  display: none;
 }
 .button.wide-button {
   display: block;
@@ -6011,24 +6044,13 @@ table.results-table tr:hover:not(.first) {
   text-align: left;
 }
 /**-----------------------------------------/
- * Movie
+ * Book
  *-----------------------------------------*/
 pre {
   overflow: auto;
 }
 .reset {
   margin: 48px;
-}
-.movieNav {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-evenly;
-  background-image: #060d13;
-  border-radius: 6px;
-}
-.movieNav a {
-  padding: 1em;
-  color: white;
 }
 /**-----------------------------------------/
  * Content
@@ -6224,13 +6246,9 @@ input.check {
   figure img {
     border-radius: 0;
   }
-  .movieNav {
-    display: block;
-    text-align: center;
-    border-radius: 0;
-  }
-  .movieNav a {
+  .pageNav {
     width: 100%;
+    border-radius: 0;
   }
   .wider-form {
     width: 80%;

@@ -44,18 +44,18 @@
 /**-----------------------------------------/
  * Navbars, mobile and desktop
  *-----------------------------------------*/
- .rm-navbar-max {
-     display: none;
- }
+.rm-navbar-max {
+    display: none;
+}
 
- .rm-small {
-     font-size: 2em;
- }
+.rm-small {
+    font-size: 2em;
+}
 
- .rm-default a {
-  font-size: 1.6em;
-  padding: 0.6em;
- }
+.rm-default a {
+    font-size: 1.6em;
+    padding: 0.6em;
+}
 /**-----------------------------------------/
  * Header
  *-----------------------------------------*/
@@ -160,6 +160,22 @@
 
 .blogg {
     clear: both;
+}
+/**-----------------------------------------/
+ * Secondary nav
+ *-----------------------------------------*/
+.pageNav {
+     display: flex;
+     flex-wrap: nowrap;
+     justify-content: space-evenly;
+     background: @headfoot;
+     border-radius: 5px;
+
+     a {
+         color: @headfootText;
+         padding: 0.75em;
+         font-size: 1.25rem;
+     }
 }
 /**-----------------------------------------/
  * Article
@@ -290,10 +306,19 @@ table.results-table {
     height: 50px;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 /**-----------------------------------------/
  * Form
  *-----------------------------------------*/
-.form {
+.htmlform fieldset {
+    border: none;
+}
+
+.form,
+.htmlform {
     margin: 0 auto;
     margin-top: 24px;
     margin-bottom: 24px;
@@ -336,7 +361,9 @@ table.results-table {
 /**-----------------------------------------/
  * Buttons
  *-----------------------------------------*/
-.button {
+.button,
+.htmlform input[type="submit"],
+.htmlform input[type="reset"] {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     box-sizing: border-box;
@@ -351,6 +378,14 @@ table.results-table {
     border-radius: 5px;
     border: none;
     cursor: pointer;
+}
+
+.htmlform .buttonbar {
+    text-align: center;
+}
+
+.htmlform legend {
+    display: none;
 }
 
 .button.wide-button {
@@ -473,7 +508,7 @@ table.results-table {
     text-align: left;
 }
 /**-----------------------------------------/
- * Movie
+ * Book
  *-----------------------------------------*/
  pre {
      overflow: auto;
@@ -481,19 +516,6 @@ table.results-table {
 
 .reset {
     margin: 48px;
-}
-
-.movieNav {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    background-image: @headfoot;
-    border-radius: 6px;
-
-    a {
-        padding: 1em;
-        color: @headfootText;
-    }
 }
 /**-----------------------------------------/
  * Content
