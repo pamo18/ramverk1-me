@@ -35,9 +35,6 @@ class CreateUserForm extends FormModel
 
                 "repeat-password" => [
                     "type"        => "password",
-                    "validation" => [
-                        "match" => "password"
-                    ],
                 ],
 
                 "submit" => [

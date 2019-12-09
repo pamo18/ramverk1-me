@@ -1,6 +1,8 @@
 --
--- Insert books
+-- Reset book
 --
+
+DELETE FROM `Book`;
 
 INSERT INTO `Book` (`title`, `author`, `image`) VALUES
     ("In Search of Lost Time", "Marcel Proust", "In_Search_of_Lost_Time.jpg"),

@@ -26,7 +26,7 @@ class UserLoginForm extends FormModel
                 "legend" => "User Login"
             ],
             [
-                "user" => [
+                "username" => [
                     "type"        => "text",
                     //"description" => "Here you can place a description.",
                     //"placeholder" => "Here is a placeholder",
@@ -58,7 +58,7 @@ class UserLoginForm extends FormModel
     public function callbackSubmit()
     {
         // Get values from the submitted form
-        $username       = $this->form->value("user");
+        $username       = $this->form->value("username");
         $password      = $this->form->value("password");
 
         $user = new User();

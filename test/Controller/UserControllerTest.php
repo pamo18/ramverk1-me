@@ -39,6 +39,9 @@ class UserControllerTest extends TestCase
         // Setup the controller
         $this->controller = new UserController();
         $this->controller->setDI($this->di);
+        $session = $di->get("session");
+        $session->start();
+        $session->set("testdb", true);
     }
 
 
@@ -57,11 +60,45 @@ class UserControllerTest extends TestCase
 
 
     /**
-     * Test the route "login".
+     * Test the route "create".
      */
-    public function testLoginAction()
+    public function testCreateAction()
     {
-        $res = $this->controller->loginAction();
+        shell_exec("sqlite3 " . ANAX_INSTALL_PATH . "/data/db_test.sqlite < sql/reset/user_reset.sql");
+
+        $res = $this->controller->createAction();
+        $this->assertIsObject($res);
+        $this->assertInstanceOf("Anax\Response\Response", $res);
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+
+        $_SERVER["REQUEST_METHOD"] = "POST";
+
+        $this->di->request->setGlobals([
+            "post" => [
+                "anax/htmlform-id" => "Pamo\User\HTMLForm\CreateUserForm",
+                "username" => "test1",
+                "password" => "test",
+                "repeat-password" => "test",
+                "submit" => "Create user"
+            ]
+        ]);
+
+        $res = $this->controller->createAction();
+        $this->assertIsObject($res);
+        $this->assertInstanceOf("Anax\Response\Response", $res);
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+
+        $this->di->request->setGlobals([
+            "post" => [
+                "anax/htmlform-id" => "Pamo\User\HTMLForm\CreateUserForm",
+                "username" => "test2",
+                "password" => "no",
+                "repeat-password" => "match",
+                "submit" => "Create user"
+            ]
+        ]);
+
+        $res = $this->controller->createAction();
         $this->assertIsObject($res);
         $this->assertInstanceOf("Anax\Response\Response", $res);
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
@@ -70,11 +107,41 @@ class UserControllerTest extends TestCase
 
 
     /**
-     * Test the route "create".
+     * Test the route "login".
      */
-    public function testCreateAction()
+    public function testLoginAction()
     {
-        $res = $this->controller->createAction();
+        $res = $this->controller->loginAction();
+        $this->assertIsObject($res);
+        $this->assertInstanceOf("Anax\Response\Response", $res);
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+
+        $_SERVER["REQUEST_METHOD"] = "POST";
+
+        $this->di->request->setGlobals([
+            "post" => [
+                "anax/htmlform-id" => "Pamo\User\HTMLForm\UserLoginForm",
+                "username" => "test1",
+                "password" => "test",
+                "submit" => "Login"
+            ]
+        ]);
+
+        $res = $this->controller->loginAction();
+        $this->assertIsObject($res);
+        $this->assertInstanceOf("Anax\Response\Response", $res);
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+
+        $this->di->request->setGlobals([
+            "post" => [
+                "anax/htmlform-id" => "Pamo\User\HTMLForm\UserLoginForm",
+                "username" => "test1",
+                "password" => "wrong",
+                "submit" => "Login"
+            ]
+        ]);
+
+        $res = $this->controller->loginAction();
         $this->assertIsObject($res);
         $this->assertInstanceOf("Anax\Response\Response", $res);
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);

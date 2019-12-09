@@ -38,6 +38,9 @@ class BookControllerTest extends TestCase
         $this->controller = new BookController();
         $this->controller->setDI($this->di);
         $this->controller->initialize();
+        $session = $di->get("session");
+        $session->start();
+        $session->set("testdb", true);
     }
 
 
@@ -78,9 +81,7 @@ class BookControllerTest extends TestCase
         $this->assertInstanceOf("Anax\Response\Response", $res);
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
 
-        $session = $this->di->get("session");
-        $session->start();
-        $session->set("anax/htmlform-id", "Pamo\Book\HTMLForm\CreateForm");
+        $_SERVER["REQUEST_METHOD"] = "POST";
 
         $this->di->request->setGlobals([
             "post" => [
@@ -101,6 +102,37 @@ class BookControllerTest extends TestCase
 
 
     /**
+     * Test the route "update".
+     */
+    public function testUpdateAction()
+    {
+        $res = $this->controller->updateAction(6);
+        $this->assertIsObject($res);
+        $this->assertInstanceOf("Anax\Response\Response", $res);
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+
+        $_SERVER["REQUEST_METHOD"] = "POST";
+
+        $this->di->request->setGlobals([
+            "post" => [
+                "anax/htmlform-id" => "Pamo\Book\HTMLForm\UpdateForm",
+                "id" => "6",
+                "title" => "edit-title",
+                "author" => "edit-author",
+                "image" => "edit-image",
+                "submit" => "Save"
+            ]
+        ]);
+
+        $res = $this->controller->updateAction(1);
+        $this->assertIsObject($res);
+        $this->assertInstanceOf("Anax\Response\Response", $res);
+        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
+    }
+
+
+
+    /**
      * Test the route "delete".
      */
     public function testDeleteAction()
@@ -110,44 +142,17 @@ class BookControllerTest extends TestCase
         $this->assertInstanceOf("Anax\Response\Response", $res);
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
 
+        $_SERVER["REQUEST_METHOD"] = "POST";
+
         $this->di->request->setGlobals([
             "post" => [
                 "anax/htmlform-id" => "Pamo\Book\HTMLForm\DeleteForm",
-                "select" => "1",
+                "select" => "6",
                 "submit" => "Delete item"
             ]
         ]);
 
         $res = $this->controller->deleteAction();
-        $this->assertIsObject($res);
-        $this->assertInstanceOf("Anax\Response\Response", $res);
-        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
-    }
-
-
-
-    /**
-     * Test the route "update".
-     */
-    public function testUpdateAction()
-    {
-        $res = $this->controller->updateAction(1);
-        $this->assertIsObject($res);
-        $this->assertInstanceOf("Anax\Response\Response", $res);
-        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
-
-        $this->di->request->setGlobals([
-            "post" => [
-                "anax/htmlform-id" => "Pamo\Book\HTMLForm\UpdateForm",
-                "id" => "1",
-                "title" => "test-title",
-                "author" => "test-author",
-                "image" => "test-image",
-                "submit" => "Save"
-            ]
-        ]);
-
-        $res = $this->controller->updateAction(1);
         $this->assertIsObject($res);
         $this->assertInstanceOf("Anax\Response\Response", $res);
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
