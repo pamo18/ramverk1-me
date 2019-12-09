@@ -78,6 +78,10 @@ class BookControllerTest extends TestCase
         $this->assertInstanceOf("Anax\Response\Response", $res);
         $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
 
+        $session = $this->di->get("session");
+        $session->start();
+        $session->set("anax/htmlform-id", "Pamo\Book\HTMLForm\CreateForm");
+
         $this->di->request->setGlobals([
             "post" => [
                 "anax/htmlform-id" => "Pamo\Book\HTMLForm\CreateForm",
